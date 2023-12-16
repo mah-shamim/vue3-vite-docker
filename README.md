@@ -11,6 +11,43 @@ container. Once the container is stable, I will add more instructions here in th
 
 You can find the latest build details on the [Docker Hub](https://hub.docker.com/r/mahshamim/vue3-vite/)
 
+# Uses
+
+- Open the **vite.config.js** file and add the server object with the port field to the configuration:
+
+```
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import path from 'path';
+import vueI18n from '@intlify/vite-plugin-vue-i18n';
+import { fileURLToPath, URL } from 'url';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+    plugins: [
+        vue(),
+        vueI18n({
+            include: path.resolve(__dirname, './src/locales/**')
+        })
+    ],
+    optimizeDeps: {
+        include: ['quill', 'nouislider']
+    },
+    resolve: {
+        alias: [
+            {
+                find: /^~(.*)$/,
+                replacement: 'node_modules/$1'
+            },
+            { find: '/@', replacement: fileURLToPath(new URL('./src', import.meta.url)) }
+        ]
+    },
+    server: {
+        host: '0.0.0.0'
+    }
+});
+```
+
 # What works
 
 - [x] NodeJS Latest
